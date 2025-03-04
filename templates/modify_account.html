@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify Account</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        #change-password-section {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('home') }}">Home</a>
+        </div>
+        <h1 class="logo">Encrypted Chatroom</h1>
+        <div class="nav-right">
+            {% if session.get('username') %}
+            <a href="{{ url_for('modify_account') }}">Modify Account</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Signup</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <h2>Modify Account</h2>
+    <div class="bg-img">
+        <div class="form-container">
+
+            <form action="{{ url_for('modify_account') }}" method="POST">
+                <div>
+                    <label for="new_username">New Username:</label>
+                    <input type="text" id="new_username" name="new_username">
+                </div>
+                <div>
+                    <label for="new_email">New Email:</label>
+                    <input type="email" id="new_email" name="new_email">
+                </div>
+            
+                <button type="button" onclick="document.getElementById('change-password-section').style.display='block'">Change Password</button>
+                
+                <div id="change-password-section" style="display:none;">
+                    <div>
+                        <label for="old-password">Old Password:</label>
+                        <input type="password" id="old-password" name="old_password" required>
+                    </div>
+                    <div>
+                        <label for="new-password">New Password:</label>
+                        <input type="password" id="new-password" name="new_password" required>
+                    </div>
+                    <div>
+                        <label for="confirm-password">Confirm Password:</label>
+                        <input type="password" id="confirm-password" name="confirm_password" required>
+                    </div>
+                </div>
+            
+                <button type="submit">Update Account</button>
+            </form>
+            
+</div>
+</div>
+    <script>
+        function confirmDeletion() {
+            return confirm("Are you sure you want to delete your account? This action cannot be undone.");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypted Chatroom</title>
+    <link rel="stylesheet" href="../static/style.css" />
+</head>
+<body>
+
+<div class="navbar">
+    <div class="nav-left">
+        <a href="{{ url_for('home') }}">Home</a>
+    </div>
+    <h1 class="logo">Encrypted Chatroom</h1>
+    <div class="nav-right">
+        {% if session.get('username') %}
+        <a href="{{ url_for('modify_account') }}">Modify Account</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('signup') }}">Signup</a>
+        {% endif %}
+    </div>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<div class="bg-img">
+        <div class="form-container">
+            <h3>Enter The Encrypted Chatroom</h3>
+            <form method="post" class="buttons">
+                <div class="join">
+                    <input type="text" id="code" placeholder="Room Code" name="code" value="{{ code }}">
+                    <button type="submit" name="join">Join a Room</button>
+                </div>
+                <button type="submit" name="create" class="create-btn">Create a Room</button>
+                {% if error %}
+                    <div class="error">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </form>
+            <div class="center-message">
+                {% if session.get('username') %}
+                    <p>Welcome, {{ session['username'] }}!</p>
+                {% else %}
+                    <p>Please log in. Otherwise, you can text as an anonymous user.</p>
+                {% endif %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
