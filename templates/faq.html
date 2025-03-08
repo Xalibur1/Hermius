@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FAQ</title>
+        <link rel="stylesheet" href="../static/style.css" />
+    </head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('tos') }}">ToS</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+        </div>
+        <h1 class="logo"><a href="{{ url_for('home') }}">Encrypted Chatroom</h1></a> 
+        <div class="nav-right">
+            {% if session.get('username') %}
+            <a href="{{ url_for('modify_account') }}">Modify Account</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Signup</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+        <p>Find answers to common questions about SecureChat</p>
+        <div class="faq-item">
+            <button class="faq-question">What is SecureChat?</button>
+            <div class="faq-answer">
+                <p>SecureChat is an encrypted anonymous chatroom platform that allows users to communicate securely without revealing their identity. Users can create or join chat rooms anonymously or create an account for additional features.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Is SecureChat really anonymous?</button>
+            <div class="faq-answer">
+                <p>Yes, SecureChat ensures that your identity remains anonymous while you communicate in chat rooms.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">What's the difference between anonymous and registered users?</button>
+            <div class="faq-answer">
+                <p>Anonymous users can join chat rooms without creating an account, while registered users have access to additional features such as creating private rooms and recovering their accounts.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">How do I create a private room?</button>
+            <div class="faq-answer">
+                <p>To create a private room, you need to register an account and then click on the 'Create Private Room' button in your dashboard.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Can I recover my account if I forget my password?</button>
+            <div class="faq-answer">
+                <p>Yes, you can recover your account by clicking on the 'Forgot Password' link on the login page and following the instructions.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Is my data stored securely?</button>
+            <div class="faq-answer">
+                <p>Yes, your data is stored securely with end-to-end encryption, ensuring that only you and the intended recipient can read the messages.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">How do you handle inappropriate content or behavior?</button>
+            <div class="faq-answer">
+                <p>We have a reporting system in place for users to report inappropriate content or behavior. Our team reviews these reports and takes appropriate action.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question">Can I delete my messages or account?</button>
+            <div class="faq-answer">
+                <p>Yes, you can delete your messages or account by going to your account settings and selecting the appropriate option.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const answer = button.nextElementSibling;
+                if (button.classList.contains('active')) {
+                    answer.style.display = 'block';
+                } else {
+                    answer.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <footer>
+        <p>&copy; <span id="year"></span> SecureChat. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

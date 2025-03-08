@@ -2,11 +2,41 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto y;
+  background-color: #000000; /* Dark purple */
+  color: #f3e5f5; /* Lavender */
+}
+
+footer {
+  background-color: #000000; /* Dark purple */
+  color: #f3e5f5; /* Lavender */
+  text-align: center;
+  padding: 20px;
+  border-top: 2px solid #6a1b9a; /* Medium purple */
+  width: 100%;
+  font-family: 'Arial', sans-serif; /* Prettier font */
+  font-size: 16px; /* Adjust font size */
+  position: relative;
+  margin-top: 0px; /* Space between footer and above element */
+}
+
+footer a {
+  color: #f2bafa; /* Lavender */
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #f75c92; /* Slightly more pink */
+}
+
+footer p {
+  margin: 10px 0;
+  font-size: 14px;
 }
 
 .bg-img {
-  background-image: url('../static/bg.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -16,22 +46,64 @@ body {
 }
 
 .form-container {
-  background-color: hsl(298, 100%, 7%);
-  color:rgb(207, 136, 255);
+  background-color: #000000; /* Dark purple */
+  color: #ec8cfb; /* Lavender */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px;
+  border: 2px solid #6a1b9a; /* Medium purple */
   width: 100%;
+  text-emphasis-color: #f3e5f5; /* Lavender */
   text-align: center;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  border: 2px solid #6a1b9a; /* Medium purple */
+  background-color: #000000; /* Dark purple */
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.side-container {
+  width: 20%;
+  background-color: #000000;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: calc(52px + 60px);
+  bottom: 0;
+  border: 2px solid #6a1b9a;
+}
+
+.side-container.left {
+  left: 0;
+  margin-right: 50%;
+}
+
+.side-container.right {
+  right: 0;
+  margin-left: 50%;
+}
+
+.main-container {
+  width: 100%;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar .nav-left {
@@ -41,21 +113,23 @@ body {
 .navbar .nav-right {
   display: flex;
 }
+
 .navbar h1 {
-  color: rgb(233, 95, 237);
+  color: #f3e5f5; /* Lavender */
   text-align: center;
   padding: 10px 15px 0px 100px;
   text-decoration: none;
   border-radius: 4px;
   transition: background-color 0.3s;
-  margin-left: 10px
+  margin-left: 10px;
 }
+
 .navbar h1:hover {
-  color: rgb(207, 136, 255);
+  color: #f8bbd0; /* Slightly more pink */
 }
 
 .navbar a {
-  color: white;
+  color: #f2bafa; /* Lavender */
   text-align: center;
   padding: 10px 15px;
   text-decoration: none;
@@ -65,12 +139,12 @@ body {
 }
 
 .navbar a:hover {
-  background-color: #555;
+  background-color: #f06292; /* Slightly more pink */
 }
 
 .center-message {
   text-align: center;
-  color:rgb(207, 136, 255);
+  color: #f1a2fd; /* Lavender */
   margin-top: 10px;
   font-size: 18px;
 }
@@ -98,9 +172,9 @@ body {
   justify-content: center;
   gap: 15px;
   margin-top: 30px;
-  background-color: rgb(207, 136, 255); 
-  border-radius: 8px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background-color: #ba68c8; /* Light purple */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 400px;
   margin: 0 auto;
@@ -115,8 +189,8 @@ body {
 
 .create-btn {
   width: 100%;
-  background-color: #5a004c; 
-  color: rgb(255, 148, 230);
+  background-color: #8e24aa; /* Medium purple */
+  color: #f3e5f5; /* Lavender */
   padding: 12px;
   border: none;
   border-radius: 4px;
@@ -125,7 +199,7 @@ body {
 }
 
 .create-btn:hover {
-  background-color: #3d0031; 
+  background-color: #f48fb1; /* Slightly more pink */
 }
 
 input[type="text"],
@@ -141,8 +215,8 @@ input[type="password"] {
 
 button[type="submit"] {
   width: 100%;
-  background-color: #6b0055; 
-  color: white;
+  background-color: #6a1b9a; /* Medium purple */
+  color: #f3e5f5; /* Lavender */
   padding: 12px;
   margin: 8px 0;
   border: none;
@@ -152,13 +226,13 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #d669ce; 
+  background-color: #f8bbd0; /* Slightly more pink */
 }
 
 button[type="button"] {
   width: 100%;
-  background-color: #6b0055; 
-  color: white;
+  background-color: #6a1b9a; /* Medium purple */
+  color: #f3e5f5; /* Lavender */
   padding: 12px;
   margin: 8px 0;
   border: none;
@@ -168,29 +242,29 @@ button[type="button"] {
 }
 
 button[type="button"]:hover {
-  background-color: #d669ce; 
+  background-color: #f8bbd0; /* Slightly more pink */
 }
 
 h3 {
   text-align: center;
   margin-bottom: 20px;
+  color: #f3e5f5; /* Lavender */
 }
 
 label {
   font-weight: bold;
+  color: #f3e5f5; /* Lavender */
 }
 
 .error {
-  color: red;
+  color: #f3e5f5; /* Lavender */
   text-align: center;
 }
 
-
-
-
 h2, h3 {
-  text-align: center; 
-  margin-bottom: 20px; 
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f3e5f5; /* Lavender */
 }
 
 .flashes {
@@ -199,11 +273,90 @@ h2, h3 {
 }
 
 .flashes li.success {
-  color: green;
+  color: #f3e5f5; /* Lavender */
   text-align: center;
 }
 
 .flashes li.error {
-  color: red;
+  color: #f3e5f5; /* Lavender */
   text-align: center;
+}
+.faq-container {
+  max-width: 1000px; /* Increased max-width */
+  margin: 20px auto; /* Centered the container with more margin */
+  background-color: #000000; /* Slightly lighter dark purple */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+  padding: 20px 30px; /* More padding */
+  border: 2px solid #6a1b9a; /* Medium purple border */
+  position: relative;
+  top: -22px; /* Aligns the top of the FAQ container border with the bottom of the navbar border */
+}
+
+.faq-container h2 {
+  color: #9c27b0; /* Brighter medium purple */
+  text-align: center;
+  font-size: 28px; /* Larger font size */
+  margin-bottom: 20px; /* More space below */
+}
+
+.faq-container p {
+  color: #e1bee7; /* Lighter medium purple */
+  text-align: center;
+  font-size: 20px; /* Larger text */
+  margin-bottom: 20px; /* More space below */
+  padding: 15px 25px; /* More padding */
+  border: 2px solid #9c27b0; /* Brighter medium purple */
+  border-radius: 12px; /* More rounded corners */
+  background-color: #4a0072; /* Darker lavender */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+}
+
+.faq-item {
+  border-bottom: 1px solid #9c27b0; /* Brighter medium purple */
+  padding: 15px 0; /* More padding */
+}
+
+.faq-question {
+  width: 100%;
+  background-color: #ba68c8; /* Lighter purple */
+  color: #4a0072; /* Darker lavender */
+  text-align: left;
+  padding: 15px; /* More padding */
+  border: none;
+  border-radius: 8px; /* More rounded corners */
+  cursor: pointer;
+  font-size: 18px; /* Larger font size */
+  transition: background-color 0.3s, color 0.3s; /* Smooth color transition */
+}
+
+.faq-question:hover {
+  background-color: #e1bee7; /* Lighter lavender */
+  color: #4a0072; /* Darker lavender */
+}
+
+.faq-answer {
+  display: none;
+  padding: 15px; /* More padding */
+  color: #9c27b0; /* Brighter medium purple */
+  font-size: 16px; /* Larger font size */
+  background-color: #000000; /* Lighter lavender */
+  border-radius: 8px; /* More rounded corners */
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+.faq-question::after {
+  content: '\25BC'; /* Down arrow */
+  float: right;
+}
+
+.faq-question.active::after {
+  content: '\25B2'; /* Up arrow */
+}
+
+.faq-question.active + .faq-answer {
+  display: block;
 }

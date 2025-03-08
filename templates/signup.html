@@ -9,43 +9,64 @@
 </head>
 <body>
 
-<div class="navbar">
-    <div class="nav-left">
-        <a href="{{ url_for('home') }}">Home</a>
+    <div class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('tos') }}">ToS</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+        </div>
+        <h1 class="logo"><a href="{{ url_for('home') }}">Encrypted Chatroom</h1></a> 
+        <div class="nav-right">
+            {% if session.get('username') %}
+            <a href="{{ url_for('modify_account') }}">Modify Account</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Signup</a>
+            {% endif %}
+        </div>
     </div>
-    <h1 class="logo">Encrypted Chatroom</h1>
-    <div class="nav-right">
-        {% if session.get('username') %}
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Signup</a>
-        {% endif %}
-    </div>
-</div>
-
 <div class="bg-img">
-    <div class="content">
-        <div class="buttons">
-            <h2>Signup</h2>
-            <form method="POST">
-                <input type="text" name="username" placeholder="Username" required />
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="password" placeholder="Password" required />
-                <button type="submit">Sign Up</button>
-            </form>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                <ul>
-                  {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
-            {% endwith %}
+    <div class="container">
+        <div class="side-container left">
+            <h2>Recent Active Rooms</h2>
+            <ul>
+                <li>General Chat <span>24 users online</span></li>
+                <li>Tech Talk <span>15 users online</span></li>
+                <li>Private Discussion <span>5 users online</span></li>
+            </ul>
+        </div>
+        <div class="main-container">
+            <div class="form-container">
+                <h2>Signup</h2>
+                <form method="POST">
+                    <input type="text" name="username" placeholder="Username" required />
+                    <input type="email" name="email" placeholder="Email" required />
+                    <input type="password" name="password" placeholder="Password" required />
+                    <button type="submit">Sign Up</button>
+                </form>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    <ul>
+                      {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        <div class="side-container right">
+            <h2>Users Online</h2>
+            <p>196 (150)</p>
+            <p>Active in multiple rooms</p>
         </div>
     </div>
 </div>
-
+<footer>
+    <p>&copy; <span id="year"></span> SecureChat. All rights reserved.</p>
+</footer>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

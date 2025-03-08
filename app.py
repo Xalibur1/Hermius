@@ -68,6 +68,14 @@ def home():
 
     return render_template("home.html", username=session.get('username'))
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/tos')
+def tos():
+    return render_template('tos.html')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == "POST":
