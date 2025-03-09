@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow-y:auto;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex-grow: 1;
+            max-width: 80%;
+            padding-bottom: 10px; /* Add padding to the bottom */
+            margin-bottom: 10rem; /* Adjust the value as needed */
+            position: relative;
+            top: 2rem; /* Adjust based on your navbar height */
+            left: 0;
+            bottom: 0rem; /* Adjust based on your footer height */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-black text-purple-800">
+    <div class="wrapper">
+        <div class="bg-black border-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
+                <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
+            </div>
+            <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Encrypted Chatroom</a></h1>
+            <div class="flex space-x-4">
+                {% if session.get('username') %}
+                <a href="{{ url_for('modify_account') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Modify Account</a>
+                <a href="{{ url_for('logout') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Logout</a>
+                {% else %}
+                <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Login</a>
+                <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Signup</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="flex justify-center">
+            <div class="content max-w-7xl mx-auto mt-8 p-4 bg-black shadow-md rounded-lg border-2 border-purple-500">
+                <div class="text-center">
+                    <h2 class="text-4xl font-extrabold mb-6 text-purple-500">Terms of Service</h2>
+                    <p class="mb-8 text-lg text-purple-700">Please read these terms of service carefully before using SecureChat.</p>
+                </div>
+                <div class="space-y-4 text-purple-800">
+                    <h3 class="text-2xl font-bold">1. Acceptance of Terms</h3>
+                    <p>By accessing and using SecureChat, you accept and agree to be bound by the terms and provision of this agreement. In addition, when using SecureChat's services, you shall be subject to any posted guidelines or rules applicable to such services.</p>
+                    
+                    <h3 class="text-2xl font-bold">2. Provision of Services</h3>
+                    <p>SecureChat is providing you with encrypted chat services. You agree that SecureChat may modify or discontinue its services at any time without notice.</p>
+                    
+                    <h3 class="text-2xl font-bold">3. Privacy Policy</h3>
+                    <p>Your use of SecureChat is subject to our Privacy Policy. Please review our Privacy Policy, which governs the site and informs users of our data collection practices.</p>
+                    
+                    <h3 class="text-2xl font-bold">4. User Conduct</h3>
+                    <p>You agree to use SecureChat only for lawful purposes. You are prohibited from posting on or transmitting through SecureChat any material that violates or infringes in any way upon the rights of others, or that is unlawful, threatening, abusive, defamatory, invasive of privacy or publicity rights, vulgar, obscene, profane, or otherwise objectionable.</p>
+                    
+                    <h3 class="text-2xl font-bold">5. Termination</h3>
+                    <p>SecureChat reserves the right to terminate your access to the service at any time, without notice, for any reason whatsoever.</p>
+                    
+                    <h3 class="text-2xl font-bold">6. Changes to Terms</h3>
+                    <p>SecureChat reserves the right to change these terms at any time. You should check this page regularly to take notice of any changes we may have made to the Terms of Service.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer p-4 bg-black border-2 border-purple-500 shadow-md text-center">
+            <p>&copy; <span id="year"></span> SecureChat. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

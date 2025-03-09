@@ -15,8 +15,14 @@
                 flex-direction: column;
             }
             .content {
-                flex-grow: 1;
-                max-width: 80%; /* Adjust this value to make the content box wider */
+            flex-grow: 1;
+            max-width: 80%;
+            padding-bottom: 10px; /* Add padding to the bottom */
+            margin-bottom: 10rem; /* Adjust the value as needed */
+            position: relative;
+            top: 2rem; /* Adjust based on your navbar height */
+            left: 0;
+            bottom: 0rem; /* Adjust based on your footer height */
             }
             .footer {
                 position: fixed;
@@ -47,58 +53,58 @@
         <div class="flex justify-center">
             <div class="content max-w-7xl mx-auto mt-8 p-4 bg-black shadow-md rounded-lg border-2 border-purple-500">
             <div class="text-center">
-                <h2 class="text-4xl font-extrabold mb-6 text-purple-500">Frequently Asked Questions</h2>
-                <p class="mb-8 text-lg text-purple-700">Find answers to common questions about SecureChat</p>
+            <h2 class="text-4xl font-extrabold mb-6 text-purple-500">Frequently Asked Questions</h2>
+            <p class="mb-8 text-lg text-purple-700">Find answers to common questions about SecureChat</p>
             </div>
             <div class="space-y-4">
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">What is SecureChat?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>SecureChat is an encrypted anonymous chatroom platform that allows users to communicate securely without revealing their identity. Users can create or join chat rooms anonymously or create an account for additional features.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">Is SecureChat really anonymous?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>Yes, SecureChat ensures that your identity remains anonymous while you communicate in chat rooms.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">What's the difference between anonymous and registered users?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>Anonymous users can join chat rooms without creating an account, while registered users have access to additional features such as creating private rooms.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">How do I create a private room?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>To create a private room, you need to register an account and then click on the 'Create Private Room' button in your dashboard.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">Can I recover my account if I forget my password?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>Yes, you can recover your account by clicking on the 'Forgot Password' link on the login page and following the instructions.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">Is my data stored securely?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>Yes, your data is stored securely with end-to-end encryption, ensuring that only you and the intended recipient can read the messages.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">How do I report inappropriate content?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>We have a reporting system in place for users to report inappropriate content or behavior. Our team reviews these reports and takes appropriate action.</p>
-                </div>
-                </div>
-                <div class="faq-item">
-                <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">Can I delete my messages or account?</button>
-                <div class="faq-answer hidden mt-2 text-purple-800">
-                    <p>Yes, you can delete your messages or account by going to your account settings and selecting the appropriate option.</p>
-                </div>
-                </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">1. What is SecureChat?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>SecureChat is an encrypted anonymous chatroom platform that allows users to communicate securely without revealing their identity. Users can create or join chat rooms anonymously or create an account for additional features.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">2. Is SecureChat really anonymous?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>Yes, SecureChat ensures that your identity remains anonymous while you communicate in chat rooms.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">3. What's the difference between anonymous and registered users?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>Anonymous users can join chat rooms without creating an account, while registered users have access to additional features such as creating private rooms.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">4. How do I create a private room?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>To create a private room, you need to register an account and then click on the 'Create Private Room' button in your dashboard.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">5. Can I recover my account if I forget my password?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>Yes, you can recover your account by clicking on the 'Forgot Password' link on the login page and following the instructions.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">6. Is my data stored securely?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>Yes, your data is stored securely with end-to-end encryption, ensuring that only you and the intended recipient can read the messages.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">7. How do I report inappropriate content?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>We have a reporting system in place for users to report inappropriate content or behavior. Our team reviews these reports and takes appropriate action.</p>
+            </div>
+            </div>
+            <div class="faq-item">
+            <button class="faq-question w-full text-left text-lg font-semibold text-purple-800 hover:underline">8. Can I delete my messages or account?</button>
+            <div class="faq-answer hidden mt-2 text-purple-800 bg-purple-100 p-2 rounded">
+                <p>Yes, you can delete your messages or account by going to your account settings and selecting the appropriate option.</p>
+            </div>
+            </div>
             </div>
             </div>
         </div>
