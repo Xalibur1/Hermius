@@ -4,23 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encrypted Chatroom</title>
-    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <style>
+        .fixed-left {
+            position: absolute;
+            top: 4.6rem; /* Adjust based on your navbar height */
+            left: 0;
+            bottom: 3.5rem; /* Adjust based on your footer height */
+            width: 20%; /* Adjust width as needed */
+        }
+        .fixed-right {
+            position: absolute;
+            top: 4.6rem; /* Adjust based on your navbar height */
+            right: 0;
+            bottom: 3.5rem; /* Adjust based on your footer height */
+            width: 20%; /* Adjust width as needed */
+        }
+        .main-content {
+            margin-left: 20%; /* Adjust based on left container width */
+            margin-right: 20%; /* Adjust based on right container width */
+            margin-bottom: 0rem; /* Add margin to push footer up */
+        }
+    </style>
 </head>
-<body>
+<body class="bg-black text-purple-800">
 
-<div class="navbar">
-    <div class="nav-left">
-        <a href="{{ url_for('tos') }}">ToS</a>
-        <a href="{{ url_for('faq') }}">FAQ</a>
+<div class="bg-black border-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
+    <div class="flex space-x-4">
+        <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
+        <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
     </div>
-    <h1 class="logo"><a href="{{ url_for('home') }}">Encrypted Chatroom</h1></a> 
-    <div class="nav-right">
+    <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Encrypted Chatroom</a></h1>
+    <div class="flex space-x-4">
         {% if session.get('username') %}
-        <a href="{{ url_for('modify_account') }}">Modify Account</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('modify_account') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Modify Account</a>
+        <a href="{{ url_for('logout') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Logout</a>
         {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Signup</a>
+        <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Login</a>
+        <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Signup</a>
         {% endif %}
     </div>
 </div>
@@ -29,56 +50,80 @@
     {% if messages %}
         <ul class="flashes">
             {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
+                <li class="{{ category }} text-purple-800">{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 {% endwith %}
 
-<div class="bg-img">
-    <div class="container">
-        <div class="side-container left">
-            <h2>Recent Active Rooms</h2>
-            <ul>
-                <li>General Chat <span>24 users online</span></li>
-                <li>Tech Talk <span>15 users online</span></li>
-                <li>Private Discussion <span>5 users online</span></li>
-            </ul>
-        </div>
-        <div class="main-container">
-            <div class="form-container">
-                <h3>Enter The Encrypted Chatroom</h3>
-                <form method="post" class="buttons">
-                    <div class="join">
-                        <input type="text" id="code" placeholder="Room Code" name="code" value="{{ code }}">
-                        <button type="submit" name="join">Join a Room</button>
-                    </div>
-                    <button type="submit" name="create" class="create-btn">Create a Room</button>
-                    {% if error %}
-                        <div class="error">
-                            <ul>
-                                <li>{{ error }}</li>
-                            </ul>
-                        </div>
-                    {% endif %}
-                </form>
-                <div class="center-message">
-                    {% if session.get('username') %}
-                        <p>Welcome, {{ session['username'] }}!</p>
-                    {% else %}
-                        <p>Please log in. Otherwise, you can text as an anonymous user.</p>
-                    {% endif %}
+<div class="fixed-left bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
+    <h2 class="text-2xl font-bold text-purple-500 mb-4">Recent Active Rooms</h2>
+    <ul class="text-purple-800">
+        <li>General Chat <span class="text-purple-400">24 users online</span></li>
+        <li>Tech Talk <span class="text-purple-400">15 users online</span></li>
+        <li>Private Discussion <span class="text-purple-400">5 users online</span></li>
+    </ul>
+</div>
+
+<div class="fixed-right bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
+    <h2 class="text-2xl font-bold text-purple-500 mb-4">Users Online</h2>
+    <p class="text-purple-800">196 (150)</p>
+    <p class="text-purple-400">Active in multiple rooms</p>
+</div>
+
+<div class="main-content bg-black min-h-screen flex flex-col items-center justify-center">
+    <div class="container mx-auto p-4 text-center">
+        <div class="bg-black shadow-md p-4 rounded-lg"></div>
+            <h3 class="text-2xl font-bold text-purple-500 mb-4">Enter The Encrypted Chatroom</h3>
+            <form method="post" class="space-y-4">
+                <div class="flex space-x-4 justify-center"></div>
+                    <button type="button" id="join-room-btn" class="bg-purple-600 text-white p-2 rounded">Join a Room</button>
+                    <button type="submit" name="create" class="bg-purple-600 text-white p-2 rounded">Create a Room</button>
                 </div>
+                {% if error %}
+                    <div class="error text-red-500">
+                        <ul>
+                            <li>{{ error }}</li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </form>
+            <div class="text-center mt-4">
+                {% if session.get('username') %}
+                    <p class="text-purple-800">Welcome, {{ session['username'] }}!</p>
+                {% else %}
+                    <p class="text-purple-800">Please log in. Otherwise, you can text as an anonymous user.</p>
+                {% endif %}
             </div>
-        </div>
-        <div class="side-container right">
-            <h2>Users Online</h2>
-            <p>196 (150)</p>
-            <p>Active in multiple rooms</p>
         </div>
     </div>
 </div>
-<footer>
+
+<!-- Popup Modal -->
+<div id="room-code-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+    <div class="bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
+        <h3 class="text-2xl font-bold text-purple-500 mb-4">Enter Room Code</h3>
+        <form method="post" class="space-y-4">
+            <div class="flex flex-col space-y-2">
+                <input type="text" id="code" placeholder="Room Code" name="code" value="{{ code }}" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800">
+                <button type="submit" name="join" class="bg-purple-600 text-white p-2 rounded">Join</button>
+            </div>
+        </form>
+        <button id="close-modal-btn" class="mt-4 bg-red-600 text-white p-2 rounded">Close</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('join-room-btn').addEventListener('click', function() {
+        document.getElementById('room-code-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+        document.getElementById('room-code-modal').classList.add('hidden');
+    });
+</script>
+
+<footer class="p-4 bg-black border-2 border-purple-500 shadow-md text-center">
     <p>&copy; <span id="year"></span> SecureChat. All rights reserved.</p>
 </footer>
 <script>
