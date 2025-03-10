@@ -34,14 +34,14 @@
         <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
         <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
     </div>
-    <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Hermius</a></h1>
+    <h1 class="text-3xl font-extrabold"><a class="text-purple-400 hover:text-purple-600">Hermius</a></h1>
     <div class="flex space-x-4">
         {% if session.get('username') %}
         <a href="{{ url_for('modify_account') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Modify Account</a>
         <a href="{{ url_for('logout') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Logout</a>
         {% else %}
-        <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Login</a>
-        <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Signup</a>
+        <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Log In</a>
+        <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Sign Up</a>
         {% endif %}
     </div>
 </div>
@@ -98,7 +98,8 @@
                 {% if session.get('username') %}
                     <p class="text-purple-800">Welcome, {{ session['username'] }}!</p>
                 {% else %}
-                    <p class="text-purple-800">Please log in. Otherwise, you can text as an anonymous user.</p>
+                    <p class="text-purple-800">You can text as an anonymous user.</p>
+                    <p>However, for more features, please <a href="{{ url_for('signup') }}" class="text-purple-400 hover:text-purple-600">sign up</a> or <a href="{{ url_for('login') }}" class="text-purple-400 hover:text-purple-600">log in</a>.</p>
                 {% endif %}
             </div>
         </div>
