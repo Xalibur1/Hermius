@@ -4,72 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modify Account</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
         #change-password-section {
             display: none;
             margin-top: 20px;
         }
+        .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
     </style>
 </head>
-<body>
-    <div class="navbar">
-        <div class="nav-left">
-            <a href="{{ url_for('home') }}">Home</a>
+<body class="bg-black text-purple-800">
+
+    <div class="bg-black border-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
+        <div class="flex space-x-4">
+            <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
+            <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
         </div>
-        <h1 class="logo">Encrypted Chatroom</h1>
-        <div class="nav-right">
+        <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Hermius</a></h1>
+        <div class="flex space-x-4">
             {% if session.get('username') %}
-            <a href="{{ url_for('modify_account') }}">Modify Account</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
+            <a href="{{ url_for('modify_account') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Modify Account</a>
+            <a href="{{ url_for('logout') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Logout</a>
             {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('signup') }}">Signup</a>
+            <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Login</a>
+            <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Signup</a>
             {% endif %}
         </div>
     </div>
 
-    <h2>Modify Account</h2>
-    <div class="bg-img">
-        <div class="form-container">
-
-            <form action="{{ url_for('modify_account') }}" method="POST">
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold text-purple-500 mb-4">Modify Account</h2>
+    <div class="bg-black shadow-md p-4 rounded-lg border-2 border-purple-500">
+        <form action="{{ url_for('modify_account') }}" method="POST" class="space-y-4">
+            <div>
+                <label for="new_username" class="block text-purple-500">New Username:</label>
+                <input type="text" id="new_username" name="new_username" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full">
+            </div>
+            <div>
+                <label for="new_email" class="block text-purple-500">New Email:</label>
+                <input type="email" id="new_email" name="new_email" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full">
+            </div>
+        
+            <button type="button" onclick="document.getElementById('change-password-section').style.display='block'" class="bg-purple-600 text-white p-2 rounded">Change Password</button>
+            
+            <div id="change-password-section" class="space-y-4">
                 <div>
-                    <label for="new_username">New Username:</label>
-                    <input type="text" id="new_username" name="new_username">
+                    <label for="old-password" class="block text-purple-500">Old Password:</label>
+                    <input type="password" id="old-password" name="old_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
                 </div>
                 <div>
-                    <label for="new_email">New Email:</label>
-                    <input type="email" id="new_email" name="new_email">
+                    <label for="new-password" class="block text-purple-500">New Password:</label>
+                    <input type="password" id="new-password" name="new_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
                 </div>
-            
-                <button type="button" onclick="document.getElementById('change-password-section').style.display='block'">Change Password</button>
-                
-                <div id="change-password-section" style="display:none;">
-                    <div>
-                        <label for="old-password">Old Password:</label>
-                        <input type="password" id="old-password" name="old_password" required>
-                    </div>
-                    <div>
-                        <label for="new-password">New Password:</label>
-                        <input type="password" id="new-password" name="new_password" required>
-                    </div>
-                    <div>
-                        <label for="confirm-password">Confirm Password:</label>
-                        <input type="password" id="confirm-password" name="confirm_password" required>
-                    </div>
+                <div>
+                    <label for="confirm-password" class="block text-purple-500">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
                 </div>
-            
-                <button type="submit">Update Account</button>
-            </form>
-            
+            </div>
+        
+            <button type="submit" class="bg-purple-600 text-white p-2 rounded">Update Account</button>
+        </form>
+    </div>
 </div>
-</div>
-    <script>
-        function confirmDeletion() {
-            return confirm("Are you sure you want to delete your account? This action cannot be undone.");
-        }
-    </script>
 
+<script>
+    function confirmDeletion() {
+        return confirm("Are you sure you want to delete your account? This action cannot be undone.");
+    }
+</script>
+<footer class="footer p-4 text-purple-600 bg-black border-2 border-purple-500 shadow-md text-center">
+    <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
+</footer>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>

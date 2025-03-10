@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content">
-  <div class="room-background">
-  <div class="message-box">
+<div class="content bg-black text-purple-800 min-h-screen flex justify-center items-center">
+  <div class="room-background bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
+    <div class="message-box">
     <h2>Room Code: {{ code }}</h2>
     <div class="messages" id="messages"></div>
     <div class="inputs">

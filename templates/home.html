@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encrypted Chatroom</title>
+    <title>Hermius</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
         .fixed-left {
@@ -34,7 +34,7 @@
         <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
         <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
     </div>
-    <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Encrypted Chatroom</a></h1>
+    <h1 class="text-2xl font-bold"><a href="{{ url_for('home') }}" class="text-purple-800">Hermius</a></h1>
     <div class="flex space-x-4">
         {% if session.get('username') %}
         <a href="{{ url_for('modify_account') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Modify Account</a>
@@ -71,14 +71,20 @@
     <p class="text-purple-400">Active in multiple rooms</p>
 </div>
 
-<div class="main-content bg-black min-h-screen flex flex-col items-center justify-center">
+<div class="main-content bg-black min-h-screen justify-center">
+    
     <div class="container mx-auto p-4 text-center">
-        <div class="bg-black shadow-md p-4 rounded-lg"></div>
-            <h3 class="text-2xl font-bold text-purple-500 mb-4">Enter The Encrypted Chatroom</h3>
+        <div class="bg-black shadow-md p-4 rounded-lg border-2 border-purple-500">
+            <h3 class="text-2xl font-bold text-purple-500 mb-4">Welcome to Hermius - The Truly Anonymous & Secure Chatroom</h3>
+            <p class="text-purple-500 mb-4">
+               </p> Welcome to Hermius, the ultimate chatroom for those who value privacy and security. Here, you can chat anonymously without the need to log in. All messages are fully end-to-end encrypted and securely stored in our database, ensuring that your conversations remain private and protected. Join us and experience a truly secure and anonymous chat environment.
+            </p>
+        </div>
+        <div class="mb-40"></div>
             <form method="post" class="space-y-4">
                 <div class="flex space-x-4 justify-center"></div>
                     <button type="button" id="join-room-btn" class="bg-purple-600 text-white p-2 rounded">Join a Room</button>
-                    <button type="submit" name="create" class="bg-purple-600 text-white p-2 rounded">Create a Room</button>
+                    <button type="submit" name="create" class="bg-purple-600 text-white p-2 rounded ml-4">Create a Room</button>
                 </div>
                 {% if error %}
                     <div class="error text-red-500">
@@ -101,7 +107,7 @@
 
 <!-- Popup Modal -->
 <div id="room-code-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
-    <div class="bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
+    <div class="bg-black border-2 border-purple-500 shadow-md p-8 rounded-lg w-1/3">
         <h3 class="text-2xl font-bold text-purple-500 mb-4">Enter Room Code</h3>
         <form method="post" class="space-y-4">
             <div class="flex flex-col space-y-2">
@@ -112,7 +118,7 @@
         <button id="close-modal-btn" class="mt-4 bg-red-600 text-white p-2 rounded">Close</button>
     </div>
 </div>
-
+</div>
 <script>
     document.getElementById('join-room-btn').addEventListener('click', function() {
         document.getElementById('room-code-modal').classList.remove('hidden');
@@ -123,8 +129,8 @@
     });
 </script>
 
-<footer class="p-4 bg-black border-2 border-purple-500 shadow-md text-center">
-    <p>&copy; <span id="year"></span> SecureChat. All rights reserved.</p>
+<footer class="footer p-4 text-purple-600 bg-black border-2 border-purple-500 shadow-md text-center">
+    <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
 </footer>
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
