@@ -127,6 +127,29 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/user_profile', methods=['GET', 'POST'])
+def user_profile():
+    if 'username' not in session:
+        flash('You need to be logged in to access this page.', 'error')
+        return redirect(url_for('login'))
+
+    username = session['username']
+    c.execute('SELECT * FROM users WHERE username = ?', (username,))
+    user = c.fetchone()
+
+    if request.method == 'POST':
+        password = request.form.get('password')
+        if user and user[3] == password:
+            user_details = {
+                "username": user[1],
+                "email": user[2],
+            }
+            flash('Password verified successfully!', 'success')
+        else:
+            flash('Incorrect password.', 'error')
+
+    return render_template('user_profile.html', user=username, email=user[2])
+
 @app.route("/room")
 def room():
     room = session.get("room")
