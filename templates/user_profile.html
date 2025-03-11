@@ -6,202 +6,124 @@
     <title>Hermius</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
-        .fixed-left {
-            position: absolute;
-            top: 4.6rem; /* Adjust based on your navbar height */
-            left: 0;
-            bottom: 3.6rem; /* Adjust based on your footer height */
-            width: 20%; /* Adjust width as needed */
-        }
-        .fixed-right {
-            position: absolute;
-            top: 4.6rem; /* Adjust based on your navbar height */
-            right: 0;
-            bottom: 3.6rem; /* Adjust based on your footer height */
-            width: 20%; /* Adjust width as needed */
+        .sidebar {
+            position: fixed;
+            top: 4.6rem;
+            bottom: 3.6rem;
+            width: 20%;
+            overflow-y: auto;
         }
         .main-content {
-            margin-left: 20%; /* Adjust based on left container width */
-            margin-right: 20%; /* Adjust based on right container width */
-            min-height: calc(99.4vh - 8.1rem); /* Adjust based on navbar and footer height */
+            margin-left: 20%;
+            margin-right: 20%;
+            min-height: calc(100vh - 8.2rem);
+        }
+        button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out;
         }
     </style>
 </head>
 <body class="bg-black text-purple-800">
-
-<div class="bg-black border-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
-    <div class="flex space-x-4">
-        <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
-        <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
-    </div>
-    <h1 class="text-3xl font-extrabold"><a class="text-purple-400 hover:text-purple-600">Hermius</a></h1>
-    <div class="flex space-x-4">
-        {% if session.get('username') %}
-        <div class="relative" id="user-details-container">
-            <button class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded" id="user-details-btn">User Details</button>
-            <div class="absolute right-0 mt-2 bg-black border-2 border-purple-500 shadow-md rounded-lg hidden z-50" id="user-details-dropdown">
-                <a href="{{ url_for('user_profile') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Dashboard</a>
-                <a href="{{ url_for('modify_account') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Settings</a>
-                <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Logout</a>
+    
+    <!-- Navbar -->
+    <header class="bg-black border-b-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
+        <nav class="flex space-x-4">
+            <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
+            <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
+        </nav>
+        <h1 class="text-3xl font-extrabold">
+            <a href="{{ url_for('home') }}" class="text-purple-400 hover:text-purple-600">Hermius</a>
+        </h1>
+        <div class="flex space-x-4">
+            {% if session.get('username') %}
+            <div class="relative" id="user-details-container">
+                <button class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded" id="user-details-btn">User Details</button>
+                <div class="absolute right-0 mt-2 bg-black border-2 border-purple-500 shadow-md rounded-lg hidden z-50" id="user-details-dropdown">
+                    <a href="{{ url_for('user_profile') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Dashboard</a>
+                    <a href="{{ url_for('modify_account') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Settings</a>
+                    <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Logout</a>
+                </div>
             </div>
+            {% else %}
+            <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Log In</a>
+            <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Sign Up</a>
+            {% endif %}
         </div>
-        <script>
-            const userDetailsBtn = document.getElementById('user-details-btn');
-            const userDetailsDropdown = document.getElementById('user-details-dropdown');
-            const userDetailsContainer = document.getElementById('user-details-container');
-            let hideDropdownTimeout;
+    </header>
 
-            userDetailsBtn.addEventListener('click', function() {
-                userDetailsDropdown.classList.toggle('hidden');
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!userDetailsContainer.contains(event.target) && event.target !== userDetailsBtn) {
-                    userDetailsDropdown.classList.add('hidden');
-                }
-            });
-
-            document.addEventListener('mousemove', function(event) {
-                clearTimeout(hideDropdownTimeout);
-                if (!userDetailsContainer.contains(event.target)) {
-                    hideDropdownTimeout = setTimeout(function() {
-                        userDetailsDropdown.classList.add('hidden');
-                    }, 2000);
-                }
-            });
-        </script>
-        {% else %}
-        <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Log In</a>
-        <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Sign Up</a>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }} text-purple-800">{{ message }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
-    </div>
-</div>
+    {% endwith %}
 
-{% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        <ul class="flashes">
-            {% for category, message in messages %}
-                <li class="{{ category }} text-purple-800">{{ message }}</li>
-            {% endfor %}
+    <!-- Sidebars -->
+    <aside class="sidebar left-0 bg-black border-r-2 border-purple-500 shadow-md p-4">
+        <h2 class="text-2xl font-bold text-purple-500 mb-4">Recent Active Rooms</h2>
+        <ul class="text-purple-800">
+            <li>General Chat <span class="text-purple-400">24 users online</span></li>
+            <li>Tech Talk <span class="text-purple-400">15 users online</span></li>
+            <li>Private Discussion <span class="text-purple-400">5 users online</span></li>
         </ul>
-    {% endif %}
-{% endwith %}
+    </aside>
 
-<div class="fixed-left bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
-    <h2 class="text-2xl font-bold text-purple-500 mb-4">Recent Active Rooms</h2>
-    <ul class="text-purple-800">
-        <li>General Chat <span class="text-purple-400">24 users online</span></li>
-        <li>Tech Talk <span class="text-purple-400">15 users online</span></li>
-        <li>Private Discussion <span class="text-purple-400">5 users online</span></li>
-    </ul>
-</div>
+    <aside class="sidebar right-0 bg-black border-l-2 border-purple-500 shadow-md p-4">
+        <h2 class="text-2xl font-bold text-purple-500 mb-4">Users Online</h2>
+        <p class="text-purple-800">196 (150)</p>
+        <p class="text-purple-400">Active in multiple rooms</p>
+    </aside>
 
-<div class="fixed-right bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
-    <h2 class="text-2xl font-bold text-purple-500 mb-4">Users Online</h2>
-    <p class="text-purple-800">196 (150)</p>
-    <p class="text-purple-400">Active in multiple rooms</p>
-</div>
-
-<div class="main-content bg-black min-h-screen justify-center">
-    <div class="container mx-auto p-4 text-center">
-        <div class="bg-black shadow-md p-4 rounded-lg border-2 border-purple-500">
-            <h3 class="text-2xl font-bold text-purple-500 mb-4">User Profile</h3>
-            <div class="flex flex-col items-center space-y-4">
-                <div>
-                    <label class="block text-purple-500">Username:</label>
-                    <p class="text-purple-800">{{ username }}</p>
-                </div>
-                <div>
-                    <label class="block text-purple-500">Email:</label>
-                    <p class="text-purple-800">{{ email[0] }}****{{ email[-1] }}<button id="view-email-btn" class="text-purple-400 hover:text-purple-600 ml-2">View</button></p>
-                </div>
-                <div id="email-popup" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-                    <div class="bg-black border-2 border-purple-500 shadow-md p-4 rounded-lg">
-                        <h3 class="text-2xl font-bold text-purple-500 mb-4">Enter Password</h3>
-                        <input type="password" id="password" class="bg-gray-800 text-purple-800 p-2 rounded mb-4 w-full" placeholder="Password">
-                        <div class="flex justify-end space-x-4">
-                            <button id="close-email-popup-btn" class="text-purple-400 hover:text-purple-600">Cancel</button>
-                            <button id="submit-password-btn" class="text-purple-400 hover:text-purple-600">Submit</button>
-                        </div>
+    <!-- Main Content -->
+    <main class="main-content bg-black flex justify-center items-center">
+        <div class="container mx-auto p-6 text-center">
+            <div class="bg-black shadow-md p-6 rounded-lg border-2 border-purple-500">
+                <h3 class="text-2xl font-bold text-purple-500 mb-4">User Profile</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <label class="block text-purple-500">Username:</label>
+                        <p class="text-purple-800">{{ user }}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="block text-purple-500">Email:</label>
+                        <p class="text-purple-800">{{ email }}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="block text-purple-500">Member Since:</label>
+                        <p class="text-purple-800">{{ member_since.strftime('%B %d, %Y') }}</p>
                     </div>
                 </div>
-                <script>
-                    document.getElementById('view-email-btn').addEventListener('click', function() {
-                        document.getElementById('email-popup').classList.remove('hidden');
-                    });
-
-                    document.getElementById('close-email-popup-btn').addEventListener('click', function() {
-                        document.getElementById('email-popup').classList.add('hidden');
-                    });
-
-                    document.getElementById('submit-password-btn').addEventListener('click', function() {
-                        const password = document.getElementById('password').value;
-                        fetch('{{ url_for("user_profile") }}', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                            },
-                            body: new URLSearchParams({ password: password })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                document.getElementById('email-popup').classList.add('hidden');
-                                document.querySelector('p.text-purple-800').textContent = data.email;
-                            } else {
-                                alert('Incorrect password');
-                            }
-                        });
-                    });
-                </script>
-                </script>
-                    <label class="block text-purple-500">Member Since:</label>
-                    <p class="text-purple-800">{{ datetime }}</p>
-                </div>
             </div>
         </div>
-    </div>
-</div>
+    </main>
 
-<!-- Email View Popup -->
+    <!-- Footer -->
+    <footer class="p-4 text-purple-600 bg-black border-t-2 border-purple-500 shadow-md text-center">
+        <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
+    </footer>
 
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const userDetailsBtn = document.getElementById('user-details-btn');
+        const userDetailsDropdown = document.getElementById('user-details-dropdown');
+        const userDetailsContainer = document.getElementById('user-details-container');
+        let hideDropdownTimeout;
 
-<script>
-    document.getElementById('view-email-btn').addEventListener('click', function() {
-        document.getElementById('email-popup').classList.remove('hidden');
-    });
+        userDetailsBtn.addEventListener('click', function() {
+            userDetailsDropdown.classList.toggle('hidden');
+        });
 
-    document.getElementById('close-email-popup-btn').addEventListener('click', function() {
-        document.getElementById('email-popup').classList.add('hidden');
-    });
-
-    document.getElementById('submit-password-btn').addEventListener('click', function() {
-        const password = document.getElementById('password').value;
-        // Add your password verification logic here
-        if (password === 'correct_password') { // Replace with actual password verification
-            document.getElementById('email-popup').classList.add('hidden');
-            document.querySelector('p.text-purple-800').textContent = 'user@example.com'; // Replace with actual email
-        } else {
-            alert('Incorrect password');
-        }
-    });
-
-    document.getElementById('upload-picture').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('profile-picture').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    });
-</script>
-
-<footer class="footer p-4 text-purple-600 bg-black border-2 border-purple-500 shadow-md text-center">
-    <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
-</footer>
-<script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+        document.addEventListener('click', function(event) {
+            if (!userDetailsContainer.contains(event.target) && event.target !== userDetailsBtn) {
+                userDetailsDropdown.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
-</html></footer></div>
+</html>

@@ -18,10 +18,10 @@ def create_tables():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
         email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        member_since TEXT
     )''')
 
-    
     c.execute('''CREATE TABLE IF NOT EXISTS messages (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         room_number TEXT,
@@ -88,7 +88,7 @@ def signup():
             return redirect(url_for('signup'))
 
         try:
-            c.execute('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', (username, email, password))
+            c.execute('INSERT INTO users (username, email, password, member_since) VALUES (?, ?, ?, ?)', (username, email, password, datetime.now()))
             conn.commit()
             session['username'] = username
             flash('User registered successfully!', 'success')
@@ -127,7 +127,7 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
-@app.route('/user_profile', methods=['GET', 'POST'])
+@app.route('/user_profile', methods=['GET'])
 def user_profile():
     if 'username' not in session:
         flash('You need to be logged in to access this page.', 'error')
@@ -137,18 +137,8 @@ def user_profile():
     c.execute('SELECT * FROM users WHERE username = ?', (username,))
     user = c.fetchone()
 
-    if request.method == 'POST':
-        password = request.form.get('password')
-        if user and user[3] == password:
-            user_details = {
-                "username": user[1],
-                "email": user[2],
-            }
-            flash('Password verified successfully!', 'success')
-        else:
-            flash('Incorrect password.', 'error')
-
-    return render_template('user_profile.html', user=username, email=user[2])
+    member_since = datetime.strptime(user[4], '%Y-%m-%d %H:%M:%S')
+    return render_template('user_profile.html', user=username, email=user[2], member_since=member_since)
 
 @app.route("/room")
 def room():

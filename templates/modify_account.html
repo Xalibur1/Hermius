@@ -3,84 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Account</title>
+    <title>Modify Account | Hermius</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
         #change-password-section {
             display: none;
-            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
         }
         .footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-            }
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-black text-purple-800">
 
-    <div class="bg-black border-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
-        <div class="flex space-x-4">
+    <!-- Navbar -->
+    <header class="bg-black border-b-2 border-purple-500 shadow-md p-4 flex justify-between items-center">
+        <nav class="flex space-x-4">
             <a href="{{ url_for('tos') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">ToS</a>
             <a href="{{ url_for('faq') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">FAQ</a>
-        </div>
-        <h1 class="text-3xl font-extrabold"><a href="{{ url_for('home') }}" class="text-purple-400 hover:text-purple-600">Hermius</a></h1>
+        </nav>
+        <h1 class="text-3xl font-extrabold">
+            <a href="{{ url_for('home') }}" class="text-purple-400 hover:text-purple-600">Hermius</a>
+        </h1>
         <div class="flex space-x-4">
             {% if session.get('username') %}
-            <a class="bg-purple-600 text-white p-2 rounded">Modify Account</a>
-            <a href="{{ url_for('logout') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Logout</a>
+            <div class="relative" id="user-details-container">
+                <button class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded" id="user-details-btn">User Details</button>
+                <div class="absolute right-0 mt-2 bg-black border-2 border-purple-500 shadow-md rounded-lg hidden z-50" id="user-details-dropdown">
+                    <a href="{{ url_for('user_profile') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Dashboard</a>
+                    <a href="{{ url_for('modify_account') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Settings</a>
+                    <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-purple-400 hover:bg-purple-600 hover:text-white">Logout</a>
+                </div>
+            </div>
             {% else %}
-            <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Login</a>
-            <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Signup</a>
+            <a href="{{ url_for('login') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Log In</a>
+            <a href="{{ url_for('signup') }}" class="text-purple-400 hover:bg-purple-600 hover:text-white p-2 rounded">Sign Up</a>
             {% endif %}
         </div>
+    </header>
+
+
+
+    
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        <main class="max-w-lg mx-auto">
+            <h2 class="text-2xl font-bold text-purple-500 mb-6 text-center">Modify Account</h2>
+            <div class="bg-black shadow-lg p-6 rounded-lg border-2 border-purple-500">
+                <form action="{{ url_for('modify_account') }}" method="POST" class="space-y-4">
+                    <div>
+                        <label for="new_username" class="block text-purple-500 font-semibold">New Username:</label>
+                        <input type="text" id="new_username" name="new_username" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full focus:ring-2 focus:ring-purple-600 outline-none">
+                    </div>
+                    <div>
+                        <label for="new_email" class="block text-purple-500 font-semibold">New Email:</label>
+                        <input type="email" id="new_email" name="new_email" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full focus:ring-2 focus:ring-purple-600 outline-none">
+                    </div>
+                    <button type="button" onclick="togglePasswordSection()" class="bg-purple-600 text-white p-2 rounded w-full font-semibold shadow hover:bg-purple-700">Change Password</button>
+                    <div id="change-password-section" class="space-y-4 mt-4">
+                        <div>
+                            <label for="old-password" class="block text-purple-500 font-semibold">Old Password:</label>
+                            <input type="password" id="old-password" name="old_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full focus:ring-2 focus:ring-purple-600 outline-none" required>
+                        </div>
+                        <div>
+                            <label for="new-password" class="block text-purple-500 font-semibold">New Password:</label>
+                            <input type="password" id="new-password" name="new_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full focus:ring-2 focus:ring-purple-600 outline-none" required>
+                        </div>
+                        <div>
+                            <label for="confirm-password" class="block text-purple-500 font-semibold">Confirm Password:</label>
+                            <input type="password" id="confirm-password" name="confirm_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full focus:ring-2 focus:ring-purple-600 outline-none" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="bg-purple-600 text-white p-2 rounded w-full font-semibold shadow hover:bg-purple-700">Update Account</button>
+                </form>
+            </div>
+        </main>
     </div>
 
-<div class="container mx-auto p-4">
-    <h2 class="text-2xl font-bold text-purple-500 mb-4">Modify Account</h2>
-    <div class="bg-black shadow-md p-4 rounded-lg border-2 border-purple-500">
-        <form action="{{ url_for('modify_account') }}" method="POST" class="space-y-4">
-            <div>
-                <label for="new_username" class="block text-purple-500">New Username:</label>
-                <input type="text" id="new_username" name="new_username" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full">
-            </div>
-            <div>
-                <label for="new_email" class="block text-purple-500">New Email:</label>
-                <input type="email" id="new_email" name="new_email" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full">
-            </div>
-        
-            <button type="button" onclick="document.getElementById('change-password-section').style.display='block'" class="bg-purple-600 text-white p-2 rounded">Change Password</button>
-            
-            <div id="change-password-section" class="space-y-4">
-                <div>
-                    <label for="old-password" class="block text-purple-500">Old Password:</label>
-                    <input type="password" id="old-password" name="old_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
-                </div>
-                <div>
-                    <label for="new-password" class="block text-purple-500">New Password:</label>
-                    <input type="password" id="new-password" name="new_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
-                </div>
-                <div>
-                    <label for="confirm-password" class="block text-purple-500">Confirm Password:</label>
-                    <input type="password" id="confirm-password" name="confirm_password" class="p-2 rounded bg-black border-2 border-purple-500 text-purple-800 w-full" required>
-                </div>
-            </div>
-        
-            <button type="submit" class="bg-purple-600 text-white p-2 rounded">Update Account</button>
-        </form>
-    </div>
-</div>
+    <!-- Footer -->
+    <footer class="footer p-4 text-purple-600 bg-black border-t-2 border-purple-500 shadow-md text-center">
+        <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
+    </footer>
 
-<script>
-    function confirmDeletion() {
-        return confirm("Are you sure you want to delete your account? This action cannot be undone.");
-    }
-</script>
-<footer class="footer p-4 text-purple-600 bg-black border-2 border-purple-500 shadow-md text-center">
-    <p>&copy; <span id="year"></span> Hermius. All rights reserved.</p>
-</footer>
-<script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function togglePasswordSection() {
+            const section = document.getElementById('change-password-section');
+            section.style.display = section.style.display === 'none' || section.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        const userDetailsBtn = document.getElementById('user-details-btn');
+        const userDetailsDropdown = document.getElementById('user-details-dropdown');
+        const userDetailsContainer = document.getElementById('user-details-container');
+        let hideDropdownTimeout;
+
+        userDetailsBtn.addEventListener('click', function() {
+            userDetailsDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!userDetailsContainer.contains(event.target) && event.target !== userDetailsBtn) {
+                userDetailsDropdown.classList.add('hidden');
+            }
+        });
+    </script>
+
 </body>
 </html>
