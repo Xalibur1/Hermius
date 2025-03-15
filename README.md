@@ -22,8 +22,8 @@ Hermius is a secure and anonymous chatroom service that allows users to communic
 
 1. **Clone the Repository**:
     ```bash
-    git clone <repository-url>
-    cd Encrypted-Chatroom-v2.5
+    git clone https://github.com/TheRevanite/Hermius/
+    cd Hermius
     ```
 
 2. **Install Dependencies**:
