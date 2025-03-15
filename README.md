@@ -22,7 +22,7 @@ Hermius is a secure and anonymous chatroom service that allows users to communic
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/TheRevanite/Hermius/
+    git clone https://github.com/TheRevanite/Hermius.git
     cd Hermius
     ```
 
