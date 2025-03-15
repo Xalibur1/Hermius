@@ -1,6 +1,6 @@
 # Hermius - Encrypted Chatroom Service
 
-##### Currently a WIP. Expect bugs and errors to be present.
+##### *Currently a WIP. Expect bugs and errors to be present.
 Hermius is a secure and anonymous chatroom service that allows users to communicate without revealing their identity. Users can choose to chat anonymously or create an account for additional features. All messages are end-to-end encrypted, ensuring that only encrypted messages are stored in the database.
 
 ## Features
