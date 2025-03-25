@@ -1,5 +1,6 @@
-# Hermius - Encrypted Chatroom Service
+# Hermius
 
+##### *Currently a WIP. Expect bugs and errors to be present.
 Hermius is a secure and anonymous chatroom service that allows users to communicate without revealing their identity. Users can choose to chat anonymously or create an account for additional features. All messages are end-to-end encrypted, ensuring that only encrypted messages are stored in the database.
 
 ## Features
@@ -21,8 +22,8 @@ Hermius is a secure and anonymous chatroom service that allows users to communic
 
 1. **Clone the Repository**:
     ```bash
-    git clone <repository-url>
-    cd Encrypted-Chatroom-v2.5
+    git clone https://github.com/TheRevanite/Hermius.git
+    cd Hermius
     ```
 
 2. **Install Dependencies**:
@@ -55,7 +56,3 @@ Hermius currently uses a simple Caesar cipher for encrypting messages. In the fu
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the MIT License.
