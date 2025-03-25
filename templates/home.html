@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
         .sidebar {
-            position: fixed;
+            position: absolute;
             top: 4.6rem;
             bottom: 3.6rem;
             width: 20%;
@@ -21,6 +21,17 @@
         button:hover {
             transform: scale(1.05);
             transition: transform 0.2s ease-in-out;
+        }
+        .flashes {
+            position: absolute;
+            bottom: 5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ffffff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            z-index: 50;
         }
     </style>
 </head>
