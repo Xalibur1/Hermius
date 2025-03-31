@@ -239,6 +239,15 @@ def delete_account():
     flash('Your account has been successfully deleted.', 'success')
     return redirect(url_for('home'))
 
+@app.route('/contact', methods=['GET'])
+def contact():
+    name = ''
+    email = ''
+    if 'username' in session:
+        name = session['username']
+        email = c.execute('SELECT email FROM users WHERE username = ?', (name,)).fetchone()
+        email = email[0] if email else ''
+    return render_template('contact.html', name=name, email=email)
 
 @socketio.on("connect")
 def connect(auth):
