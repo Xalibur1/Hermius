@@ -6,7 +6,6 @@ from string import ascii_uppercase
 from datetime import datetime
 import sqlite3
 import os
-import os
 from dotenv import load_dotenv
 from lib import caesar_encrypt, caesar_decrypt
 
