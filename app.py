@@ -174,11 +174,21 @@ def room():
 
     return render_template("room.html", code=room, messages=decrypted_messages)
 
+@app.route('/active_rooms', methods=['GET'])
+def active_rooms():
+    active_rooms_list = list(rooms.keys())
+    return jsonify(active_rooms=active_rooms_list, count=len(active_rooms_list))
+
 @app.route("/get_users/<room>")
 def get_users(room):
     c.execute("SELECT DISTINCT user FROM messages WHERE room_number=?", (room,))
     users = c.fetchall()
     return jsonify(users=[user[0] for user in users], count=len(users))
+
+@app.route('/active_users', methods=['GET'])
+def active_users():
+    total_users = sum(room["members"] for room in rooms.values())
+    return jsonify(active_users=total_users)
 
 @socketio.on("message")
 def message(data):
