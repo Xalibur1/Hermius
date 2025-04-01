@@ -85,18 +85,18 @@
                     <h2 class="text-5xl font-extrabold mb-6 text-purple-500">Contact Us</h2>
                     <p class="mb-8 text-lg text-purple-700">We'd love to hear from you!</p>
                 </div>
-            <form id="contact-form" method="POST" action="https://script.google.com/macros/library/d/1oNVg03lJEdpRYFAsQ8bZNQkINrD1eOajE4ghF9dHuphnh1kSHoH1ESsc/1" class="space-y-4">
+            <form id="contact-form" method="POST" action="{{ url_for('contact') }}" class="space-y-4">
                 <div>
                     <label for="name" class="block text-lg font-semibold text-purple-800">Name</label>
-                    <input type="text" id="name" name="Name" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200 {% if session.get('username') %}readonly bg-gray-700 text-gray-400 cursor-not-allowed{% endif %}" value="{% if session.get('username') %}{{ session.get('username') }}{% endif %}" {% if session.get('username') %}readonly{% endif %} required>
+                    <input type="text" id="name" name="name" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200 {% if session.get('username') %}readonly bg-gray-700 text-gray-400 cursor-not-allowed{% endif %}" value="{% if session.get('username') %}{{ session.get('username') }}{% endif %}" {% if session.get('username') %}readonly{% else %}required{% endif %}>
                 </div>
                 <div>
                     <label for="email" class="block text-lg font-semibold text-purple-800">Email</label>
-                    <input type="email" id="email" name="Email" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200 {% if session.get('username') %}readonly bg-gray-700 text-gray-400 cursor-not-allowed{% endif %}" value="{% if session.get('username') %}{{ email }}{% endif %}" {% if session.get('username') %}readonly{% endif %} required>
+                    <input type="email" id="email" name="email" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200 {% if session.get('username') %}readonly bg-gray-700 text-gray-400 cursor-not-allowed{% endif %}" value="{% if session.get('username') %}{{ email }}{% endif %}" {% if session.get('username') %}readonly{% else %}required{% endif %}>
                 </div>
                 <div>
                     <label for="message" class="block text-lg font-semibold text-purple-800">Message</label>
-                    <textarea id="message" name="Message" rows="8" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200" required></textarea>
+                    <textarea id="message" name="message" rows="8" class="w-full p-2 rounded border-2 border-purple-500 bg-black text-purple-200" required></textarea>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="bg-purple-600 text-white p-2 rounded transform transition-transform duration-200 hover:scale-105">Send Message</button>
@@ -137,17 +137,4 @@
                 }, 2000);
             }
         });
-        const scriptURL = 'https://script.google.com/macros/library/d/1oNVg03lJEdpRYFAsQ8bZNQkINrD1eOajE4ghF9dHuphnh1kSHoH1ESsc/1'
-
-        const form = document.forms['contact-form']
-
-        form.addEventListener('submit', e => {
-        
-        e.preventDefault()
-        
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => alert("Thank you! Form is submitted" ))
-        .then(() => { window.location.reload(); })
-        .catch(error => console.error('Error!', error.message))
-        })
         </script>

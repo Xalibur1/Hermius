@@ -1,4 +1,6 @@
 flask
+flask-mail
+python-dotenv
 flask_socketio
 datetime
 gunicorn

@@ -1,14 +1,33 @@
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify, flash
+from flask_mail import Mail, Message
 from flask_socketio import join_room, leave_room, send, SocketIO, emit
 import random
 from string import ascii_uppercase
 from datetime import datetime
 import sqlite3
-
+import os
+import os
+from dotenv import load_dotenv
 from lib import caesar_encrypt, caesar_decrypt
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'the_most_random_thing'
+
+load_dotenv()
+MAIL_SERVER = os.getenv('MAIL_SERVER')
+MAIL_PORT = int(os.getenv('MAIL_PORT'))
+MAIL_USE_TLS = os.getenv('MAIL_USE_TLS') == 'True'
+MAIL_USE_SSL = os.getenv('MAIL_USE_SSL') == 'True'
+MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_SERVER'] = MAIL_SERVER
+app.config['MAIL_PORT'] = MAIL_PORT
+app.config['MAIL_USE_TLS'] = MAIL_USE_TLS
+app.config['MAIL_USE_SSL'] = MAIL_USE_SSL
+app.config['MAIL_USERNAME'] = MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+
+mail = Mail(app)
 socketio = SocketIO(app)
 rooms = {}
 conn = sqlite3.connect('main.db', check_same_thread=False)
@@ -239,15 +258,40 @@ def delete_account():
     flash('Your account has been successfully deleted.', 'success')
     return redirect(url_for('home'))
 
-@app.route('/contact', methods=['GET'])
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
     name = ''
     email = ''
     if 'username' in session:
         name = session['username']
-        email = c.execute('SELECT email FROM users WHERE username = ?', (name,)).fetchone()
-        email = email[0] if email else ''
+        user_email = c.execute('SELECT email FROM users WHERE username = ?', (name,)).fetchone()
+        email = user_email[0] if user_email else ''
+
+    if request.method == 'POST':
+        contact_name = request.form.get('name')
+        contact_email = request.form.get('email')
+        message = request.form.get('message')
+
+        if not contact_name or not contact_email or not message:
+            flash('Please fill out all fields.', 'error')
+            return redirect(url_for('contact'))
+
+        # Compose the email
+        msg = Message(subject=f"New Contact Form Submission from {contact_name}",
+                      sender=app.config['MAIL_USERNAME'],
+                      recipients=['learnwithmegh@gmail.com', 'aadi.pani@gmail.com', 'ayushvinayemail@gmail.com'],  # Replace with your email address
+                      body=f"Name: {contact_name}\nEmail: {contact_email}\n\nMessage:\n{message}")
+
+        try:
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+        except Exception as e:
+            flash(f'An error occurred while sending the email: {str(e)}', 'error')
+
+        return redirect(url_for('contact'))
+
     return render_template('contact.html', name=name, email=email)
+
 
 @socketio.on("connect")
 def connect(auth):
