@@ -11,7 +11,6 @@ from lib import caesar_encrypt, caesar_decrypt
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'the_most_random_thing'
-
 load_dotenv()
 MAIL_SERVER = os.getenv('MAIL_SERVER')
 MAIL_PORT = int(os.getenv('MAIL_PORT'))
@@ -25,7 +24,6 @@ app.config['MAIL_USE_TLS'] = MAIL_USE_TLS
 app.config['MAIL_USE_SSL'] = MAIL_USE_SSL
 app.config['MAIL_USERNAME'] = MAIL_USERNAME
 app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
-
 mail = Mail(app)
 socketio = SocketIO(app)
 rooms = {}
@@ -82,7 +80,7 @@ def home():
         
         session["room"] = room
         session["name"] = name
-        return redirect(url_for("room"))
+        return redirect(url_for("room", room_code=room))
 
     return render_template("home.html", username=session.get('username'))
 
@@ -157,21 +155,21 @@ def user_profile():
 
     member_since = datetime.strptime(user[4], '%Y-%m-%d %H:%M:%S')
     return render_template('user_profile.html', user=username, email=user[2], member_since=member_since)
-
-@app.route("/room")
-def room():
-    room = session.get("room")
-    if room is None or session.get("name") is None or room not in rooms:
+@app.route("/room/<room_code>")
+def room(room_code):
+    if room_code is None or session.get("name") is None or room_code not in rooms:
         return redirect(url_for("home"))
     
-    c.execute("SELECT user, encrypted_message FROM messages WHERE room_number=?", (room,))
+    session["room"] = room_code  # Store room code in session
+
+    c.execute("SELECT user, encrypted_message FROM messages WHERE room_number=?", (room_code,))
     encrypted_messages = c.fetchall()
     decrypted_messages = []
     for user, encrypted_message in encrypted_messages:
         decrypted_message = caesar_decrypt(encrypted_message)
         decrypted_messages.append({"user": user, "message": decrypted_message})
 
-    return render_template("room.html", code=room, messages=decrypted_messages)
+    return render_template("room.html", code=room_code, messages=decrypted_messages)
 
 @app.route('/active_rooms', methods=['GET'])
 def active_rooms():
